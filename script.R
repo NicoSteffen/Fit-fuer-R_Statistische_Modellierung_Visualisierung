@@ -1,7 +1,7 @@
 # https://stephangoerigk.github.io/CFH_R_bookdown/über-dieses-skript.html
 # https://github.com/NicoSteffen/Fit-fuer-R_Statistische_Modellierung_Visualisierung
 
-
+df = readRDS(url("https://raw.githubusercontent.com/NicoSteffen/Fit-fuer-R_Statistische_Modellierung_Visualisierung/main/klinische_patientendaten.rds"))
 
 
 
