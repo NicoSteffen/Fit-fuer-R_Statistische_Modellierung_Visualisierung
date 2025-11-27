@@ -202,45 +202,67 @@ mod_lmm = lmer(BDI ~ Time_num * Gruppe +
 summary(mod_lmm)
 
 
+# https://posit.co/wp-content/uploads/2022/10/data-visualization-1.pdf
+
 # ggplot wenn noch zeit 
 
-ggplot(data = diamonds, aes(x = carat, y = price, colour = cut)) +
+ggplot(data = df, aes(x = Resilienz_c, y = BDI_T0, colour = Geschlecht)) +
   geom_point() +
-  geom_smooth(method = "lm")
+  geom_smooth(method = "lm") +
+  labs(title = "Interaktion: Resilienz x Geschlecht",
+       subtitle = "Vorhersage der Depression (BDI Baseline)",
+       x = "Resilienz (zentriert)",
+       y = "BDI Score (T0)",
+       colour = "Geschlecht") +
+  theme_minimal()
+
 
 # histogramm
 
-ggplot(data = diamonds, aes(x = price)) +
+ggplot(data = df, aes(x = BDI_T0)) +
   geom_histogram()
 
-ggplot(data = diamonds, aes(x = price)) +
-  geom_histogram(binwidth = 30)
+names(df)
 
 # Histogramm
 
-ggplot(data = diamonds, aes(x = cut, y = carat)) +
+ggplot(data = df, aes(x = Klinik, y = change_bdi)) +
   stat_summary(geom = "bar", fun = mean) 
 
 # Ballkendiagramm mit mehr als 3 variablen 
 
-ggplot(data = diamonds, aes(x = cut, y = carat, fill = clarity)) +
+ggplot(data = df, aes(x = Klinik, y = change_bdi, fill = Gruppe)) +
   stat_summary(geom = "bar", fun = mean, position = position_dodge2(.95))
 
 # boxplot
 
-ggplot(data = diamonds, aes(x = cut, y = carat)) +
+ggplot(data = df, aes(x = Klinik, y = change_bdi)) +
   geom_boxplot()
 
 # Teilgraphen 
 
-ggplot(data = diamonds, aes(x = carat, y = price, colour = cut)) +
-  geom_point() +
-  geom_smooth(method = "lm") +
-  facet_grid(cols = vars(cut))
 
-ggplot(data = diamonds, aes(x = carat, y = price, colour = cut)) +
-  geom_point() +
-  geom_smooth(method = "lm") +
-  facet_grid(rows = vars(cut))
+
+ggplot(data = df, aes(x = Resilienz_c, y = BDI_T0, colour = Geschlecht)) +
+  geom_point(alpha = 0.6) + 
+  geom_smooth(method = "lm") + 
+  facet_grid(cols = vars(Klinik)) +
+  theme_bw() + # Macht einen schönen Kasten um die Facetten
+  labs(title = "Zusammenhang Resilienz & Depression nach Standort",
+       subtitle = "Vergleich der Kliniken (Facet Grid)",
+       x = "Resilienz (zentriert)",
+       y = "BDI Score (T0)")
+
+ggplot(data = df, aes(x = Resilienz_c, y = BDI_T0, colour = Geschlecht)) +
+  geom_point(alpha = 0.6) + 
+  geom_smooth(method = "lm") + 
+  facet_grid(rows = vars(Klinik)) +
+  theme_bw() + # Macht einen schönen Kasten um die Facetten
+  labs(title = "Zusammenhang Resilienz & Depression nach Standort",
+       subtitle = "Vergleich der Kliniken (Facet Grid)",
+       x = "Resilienz (zentriert)",
+       y = "BDI Score (T0)")
+
+
 
 
