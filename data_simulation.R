@@ -98,3 +98,4 @@ head(studie_data)
 # Schneller Check ob Signifikanz vorliegt (nur zur Info für dich)
 print("Mittelwerte pro Gruppe zu den Zeitpunkten:")
 aggregate(cbind(BDI_T0, BDI_T1, BDI_T2) ~ Gruppe, data = studie_data, mean)
+
