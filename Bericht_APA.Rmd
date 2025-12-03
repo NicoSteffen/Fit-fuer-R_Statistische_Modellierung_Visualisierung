@@ -1,0 +1,737 @@
+---
+title: "Bericht nach APA"
+subtitle: "⚔<br/>with xaringan"
+author: "Nico Steffen"
+institute: "RStudio, PBC"
+date: "2016/12/12 (updated: `r Sys.Date()`)"
+output:
+  xaringan::moon_reader:
+    css: [xaringan-themer.css, "hygge", style.css]
+    lib_dir: libs
+    nature:
+      slideNumberFormat: "%current%"
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: '16:9'
+    seal: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+
+library(tidyverse)
+library(kableExtra)
+library(ggplot2)
+library(plotly)
+library(htmlwidgets)
+library(MASS)
+library(ggpubr)
+library(xaringanthemer)
+library(xaringanExtra)
+
+style_duo_accent(
+  primary_color = "#621C37",
+  secondary_color = "#EE0071",
+  background_image = "blank.png"
+)
+
+xaringanExtra::use_xaringan_extra(c("tile_view"))
+
+use_scribble(
+  pen_color = "#EE0071",
+  pen_size = 4
+  )
+
+knitr::opts_chunk$set(
+  fig.retina = TRUE,
+  warning = FALSE,
+  message = FALSE
+)
+```
+
+name: Title slide
+class: middle, left
+<br><br><br><br><br><br><br>
+# Fit für R - Statistische Modellierung & Visualisierung
+***
+### Bericht nach APA
+#####  | Nico Steffen 
+
+---
+
+class: top, left
+### Einfaktorielle Varianzanalyse (ANOVA)
+
+#### Berichten der Ergebnisse nach APA
+
+**Statistischer Bericht: **
+
+Eine einfaktorielle ANOVA wurde durchgeführt, um die Symptomverbesserung zwischen verschiedenen Medikamentgruppen (Medikament 1, Medikament 2 und Placebo) zu vergleichen. 
+
+Vor der Analyse wurden die Voraussetzungen überprüft. Die Annahme der Varianzhomogenität konnte nach Prüfung mit dem Levene Test bestätigt werden ( $p$ = .748). Auch die Normalverteilungsannahme, welche mit Shapiro Wilk Tests überprüft wurde, war gegebn (Medikament 1: $p$ = .962; Medikament 2: $p$ = .281; Placebo: $p$ = .928). 
+
+Die ANOVA ergab einen signifikanten Unterschied in der Symptomverbesserung zwischen den Gruppen, $F$(2, 147) = 20.56, $p$ < .001, $ω^2$ = .21.
+
+Ein Post-Hoc Test mit Tukey Korrektur zeigte keinen signifikanten Unterschied ( $p$ = .704) zwischen Medikament 1 und Medikament 2, aber signifikante Unterschiede zwischen Medikament 1 und Placebo (4.45, $p$ < .001) und Medikament 2 und Placebo (3.85, $p$ < .001)
+
+
+---
+class: top, left
+### Einfaktorielle Varianzanalyse (ANOVA)
+
+#### Berichten der Ergebnisse nach APA 
+
+**Hinweis zum Berichten statistischer Ergebnisse**
+
+<small>
+
+Die Ergebnisse einer **Varianzanalyse (ANOVA)** werden mit zwei Freiheitsgraden berichtet. Es folgen der $F$-Wert, das Signifikanzniveau sowie die Effektstärke (häufig das partielle Eta-Quadrat: $\eta^2_p$, oder Omega-Quadrat: $\omega^2$).  
+
+$F$(df<sub>Zähler</sub>, df<sub>Nenner</sub>) = F-Wert, $p$ = Signifikanz, $ω^2$ = Effektstärke
+
+> **Berichten des $p$-Werts** <br>
+> Ist der $p$-Wert kleiner als .001, schreiben Sie $p$ < .001. Ist er genau .001 oder größer, schreiben Sie den exakten $p$-Wert auf drei Nachkommastellen gerundet. 
+
+Berichten Sie nur, was die Daten tatsächlich hergeben. Wenn eine Effektstärke berechnet wurde, gehört sie in den Bericht. Wenn Post-Hoc Tests durchgeführt wurden, sollten auch deren Ergebnisse mit angegeben werden.  
+
+Dasselbe gilt für die Prüfung der Voraussetzungen: Wenn Sie in der Aufgabe Informationen zu Tests, wie dem Levene-Test oder dem Shapiro-Wilk-Test sehen, dann berichten Sie diese. Wenn keine Testergebnisse angegeben sind, können (und sollen) Sie auch keine angeben.  
+
+$\rightarrow$ Bleiben Sie also flexibel und passen Sie Ihre Berichterstattung daran an, was Ihnen vorliegt.
+
+---
+
+
+class: top, left
+### Einfache lineare Regression
+
+#### Berichten der Ergebnisse nach APA 
+
+**Statistischer Bericht:**
+
+Es wurde eine lineare Regression mit dem Prädiktor IQ und dem Kriterium Testleistung durchgeführt. Die Analyse ergab, dass IQ ein signifikanter Prädiktor für die Testleistung ist, $b$ = 0.12, $t$(18) = 3.83, $p$ = .001. Das Modell erklärte etwa 44.9% der Varianz der Testleistung, $R^2$ = .42, $F$(1,18) = 14.69, $p$ = .001.
+
+Eine Prüfung der Normalverteilung der standardisierten Residuen mittels Shapiro-Wilk-Test ergab keinen Hinweis auf eine signifikante Abweichung von der Normalverteilung, $W$ = 0.98, $p$ = .92. Die visuelle Inspektion des Residualplots („Residuals vs. Fitted“) zeigt ebenfalls keine systematische Verletzung der Homoskedastizität.
+
+
+
+---
+
+class: top, left
+### Zweifaktorielle ANOVA
+
+#### Berichten der Ergebnisse nach APA
+
+**Statistischer Bericht:**
+
+<small>
+
+>Die zweifaktoriellen ANOVA ergab einen signifikanten Haupteffekt des Medikaments auf die Verbesserung, $F$(1, 12) = 38.46, $p$ < .001, $ω^2$ = 0.70. Der Haupteffekt der Dosis wurde ebenfalls signifikant, $F$(1, 12) = 17.79, $p$ = .001, $ω^2$ = 0.51. Es gab eine signifikante Interaktion zwischen Medikament und Dosis, $F$(1, 12) = 12.06, $p$ = .004, $ω^2$ = 0.41.
+
+Was bedeuten die Effekte inhaltlich? 
+
+**Haupteffekt Medikament:** Es gab signifikante Mittelwertsunterschiede zwischen den Stufen des Faktors Medikament, gemittelt über die Stufen der Dosis.
+
+**Haupteffekt Dosis:** Es gab signifikante Mittelwertsunterschiede zwischen den Stufen des Faktors Dosis, gemittelt über die Stufen des Medikaments.
+
+**Interaktionseffekt:** Der Interaktionseffekt deutet darauf hin, dass die Wirksamkeit der Dosis unterschiedlich ausfällt – je nachdem, welches Medikament verabreicht wurde.
+
+
+---
+class: top, left
+### Zweifaktorielle ANOVA
+
+#### Berichten der Ergebnisse nach APA
+
+**Statistischer Bericht:**
+
+#### Post-hoc Tests
+
+
+```{r include=FALSE}
+Medikament = rep(c("Verum", "Placebo"), each = 8)
+Dosis = c(rep(c("niedrig", "hoch"), each = 4), rep(c("niedrig", "hoch"), each = 4))
+Dosis = factor(Dosis, levels = c("niedrig", "hoch"))
+ID = 1:length(Medikament)
+df = data.frame(ID, Medikament, Dosis)
+
+set.seed(123)
+df$Verbesserung[df$Medikament == "Verum" & df$Dosis == "niedrig"] = rnorm(length(which(df$Medikament == "Verum" & df$Dosis == "niedrig")), 20, 4)
+df$Verbesserung[df$Medikament == "Verum" & df$Dosis == "hoch"] = rnorm(length(which(df$Medikament == "Verum" & df$Dosis == "hoch")), 35, 4)
+df$Verbesserung[df$Medikament == "Placebo" & df$Dosis == "niedrig"] = rnorm(length(which(df$Medikament == "Placebo" & df$Dosis == "niedrig")), 15, 4)
+df$Verbesserung[df$Medikament == "Placebo" & df$Dosis == "hoch"] = rnorm(length(which(df$Medikament == "Placebo" & df$Dosis == "hoch")), 15, 4)
+df$Verbesserung = round(df$Verbesserung)
+
+model = lm(Verbesserung ~ Medikament * Dosis, data = df)
+```
+
+
+
+.code60[
+.pull-left[
+```{r echo=TRUE}
+emmeans::emmeans(model, pairwise ~ Medikament)
+```
+]
+]
+
+.pull-right[
+Berichten der Ergebnisse des post-hoc Tests
+
+>Der Tukey post-hoc Test zeigte, dass die Verbesserung unter Verum ( $M$ = 28.5, $SE$ = 1.43) signifikant höher war als unter Placebo ( $M$ = 16.0, $SE$ = 1.43), $t$(12) = –6.20, $p$ < .001. Der mittlere Unterschied betrug –12.5 Punkte.
+
+]
+
+---
+
+class: top, left
+### Multiple Regression mit Interaktion - stetig x stetig 
+
+#### Berichten der Ergebnisse nach APA
+```{r include=FALSE}
+set.seed(123)
+n <- 300
+CTQ <- round(runif(n, min = 30, max = 100))
+CDRISC <- round(runif(n, min = 20, max = 95))
+CTQ_c <- scale(CTQ, scale = FALSE)
+CDRISC_c <- scale(CDRISC, scale = FALSE)
+
+BDI <- 0.5 * CTQ_c - 0.7 * CDRISC_c - 0.3 * (CTQ_c * CDRISC_c) + 
+       rnorm(n, mean = 12, sd = 6)
+
+BDI <- round(pmax(pmin(BDI, 63), 0))
+
+df <- data.frame(BDI, CTQ, CDRISC, CTQ_c, CDRISC_c)
+model <- lm(BDI ~ CTQ_c * CDRISC_c, data = df)
+
+
+
+```
+<small>
+<small>
+.code60[
+.pull-left[
+**Depressivität** gemessen durch BDI-II (Beck Depressions Inventar-II) <br>
+**Kindheitstrauma** gemessen durch CTQ (Childhood Trauma Questionnaire) <br>
+**Resilienz** gemessen durch CD-RISC (Connor-Davidson Resilience Scale) <br>
+Die Prädiktoren wurden für eine bessere Interpretierbarkeit **zentriert**.</small>
+```{r echo=FALSE}
+with(options(scipen = 0), {
+  summary(model)
+})
+```
+]
+]
+
+.pull-right[
+**Statistischer Bericht:**
+
+.content-box-gray[
+Eine multiple Regression mit Interkation mit den Prädiktoren Kindheitstrauma sowie Resilienz und dem Kriterium Depressivität wurde durchgeführt. 
+Der Prädiktor Kindheitstrauma sagt unter Konstanthaltung von Resilienz Depressivität signifikant vorher, $b$ = 0.13, $t$(296) = 2.75, $p$ = .006. 
+Auch der Prädiktor Resilienz ist bei Konstanthaltung von Kindheitstrauma signifikant mit Depressivität assoziiert, $b$ = -0.10, $t$(296) = -2.33, $p$ = .020. 
+Es zeigt sich ein signifikanter Moderationseffekt, $b$ = -0.06, $t$(296) = -25.73, $p$ < .001. 
+Das Gesamtmodell erklärt einen signifikanten Anteil der Varianz in der AV Depressivität, $F$(3, 296) = 226.5, $p$ < .001, $R^2$ = .70. 
+]
+]
+
+---
+class: top, left
+### Multiple Regression mit Interaktion - stetig x stetig 
+.code60[
+.pull-left[
+#### Inhaltliche Interpretation der Modellparameter 
+
+<small>
+<small>
+
+**Depressivität** gemessen durch BDI-II (Beck Depressions Inventar-II) <br>
+**Kindheitstrauma** gemessen durch CTQ (Childhood Trauma Questionnaire) <br>
+**Resilienz** gemessen durch CD-RISC (Connor-Davidson Resilience Scale) <br>
+Die Prädiktoren wurden für eine bessere Interpretierbarkeit **zentriert**.</small>
+```{r echo=FALSE}
+with(options(scipen = 0), {
+  summary(model)
+})
+```
+]
+]
+
+.pull-right[
+**Inhaltliche Interpretation (nur zum Verständnis - wird i.d.R. nicht berichtet!)**
+
+.content-box-gray[
+**Intercept:** Eine Person mit durchschnittlichen Werten auf Kindheitstrauma und Resilienz (aufgrund der Zentrierung) hätte einen erwarteten Depressionswert von 25.56. <br>
+**Kindheitstrauma:** Bei einer zusätzlichen Einheit Kindheitstrauma steigt die durchschnittliche Depressivität um 0.13 Einheiten (Unter Konstanthaltung von Resilienz). <br>
+**Resilienz:** Wenn die Resilienz um eine Einheit zunimmt, sinkt die erwartete Depressivität um 0.10 Einheiten (Unter Konstanthaltung von Kindheitstrauma). <br>
+**Interaktionseffekt:** Mit zunehmender Resilienz verringert sich der positive Effekt von Kindheitstrauma auf Depressivität. Resilienz wirkt damit als Moderator und schwächt den Zusammenhang zwischen Kindheitstrauma und Depressivität ab.
+]
+
+]
+
+---
+class: top, left
+### Multiple Regression mit Interaktion - diskret x stetig 
+
+#### Berichten der Ergebnisse nach APA
+```{r include=FALSE}
+set.seed(123) 
+n <- 100
+Gruppe <- rep(c(0,1), each = n)
+Schlafqualität <- c(
+  rnorm(n, mean = 4, sd = 1.5), 
+  rnorm(n, mean = 6, sd = 1.5)    
+)
+
+error <- rnorm(n*2, mean = 0, sd = 3)
+Depressivität <- 25 + (-2 * Schlafqualität) + (-3 * Gruppe) + (-2 * Schlafqualität * Gruppe) + error
+
+data <- data.frame(
+  Gruppe = factor(Gruppe, labels = c("Warteliste", "Psychotherapie")),
+  Schlafqualität = Schlafqualität,
+  Depressivität = Depressivität
+)
+model = lm(Depressivität~Schlafqualität*Gruppe, data)
+
+```
+<small>
+<small>
+.code60[
+.pull-left[
+Kriterium: **Depressivität** </br>
+Prädiktor 1: **Schlafqualität** (stetig) </br>
+Prädiktor 2: **Therapiegruppe** (diskret: Warteliste / Psychotherapie) </small>
+```{r echo=FALSE}
+with(options(scipen = 0), {
+  summary(model)
+})
+```
+]
+]
+
+.pull-right[
+**Statistischer Bericht:**
+
+.content-box-gray[
+Eine multiple lineare Regression mit Interkation wurde durchgeführt, um die Effekte von Schlafqualität und Therapiegruppe (Warteliste vs. Psychotherapie) auf Depressivität zu untersuchen. 
+Der Prädiktor Schlafqualität sagte innerhalb der Wartelistengruppe die Depressivität signifikant vorher, $b$ = -2.27, $t$(196) = -10.34, $p$ < .001. 
+Auch der Prädiktor Gruppenzugehörigkeit erwies sich als signifikant, $b$ = -5.13, $t$(196) = -3.27, $p$ = .001. 
+Es zeigt sich ein signifikanter Moderationseffekt, $b$ = -1.64, $t$(196) = -5.43, $p$ < .001. 
+Das Gesamtmodell erklärt einen signifikanten Anteil der Varianz in der AV Depressivität, $F$(3, 196) = 796.8, $p$ < .001, $R^2$ = .92. 
+]
+]
+
+---
+class: top, left
+### Multiple Regression mit Interaktion - diskret x stetig 
+.code60[
+.pull-left[
+#### Inhaltliche Interpretation der Modellparameter 
+
+<small>
+<small>
+
+Kriterium: **Depressivität** </br>
+Prädiktor 1: **Schlafqualität** (stetig) </br>
+Prädiktor 2: **Therapiegruppe** (diskret: Warteliste / Psychotherapie) </small>
+```{r echo=FALSE}
+with(options(scipen = 0), {
+  summary(model)
+})
+```
+]
+]
+
+.pull-right[
+**Inhaltliche Interpretation (nur zum Verständnis - wird i.d.R. nicht berichtet!)**
+
+.content-box-gray[
+**Intercept:** Eine Person aus der Warteliste (Gruppe = 0) hätte bei einer Schlafqualität von 0 eine erwartete Depressivität von 26.47. <br>
+**Schlafqualität:** Wenn bei einer Person aus der Wartelistegruppe die Schlafqualität um eine Einheit zunimmt, sinkt die erwartete Depressivität um 2.27 Einheiten. <br>
+**Therapiegruppe:** Der Mittelwertsunterschied in der Depressivität zwischen den beiden Therapiegruppe (Warteliste vs. Psychotherapie) liegt bei Konstanthaltung der Schlafqualität bei -5.13<br>
+**Interaktionseffekt:** Wenn bei einer Person aus der Psychotherapiegruppe (Gruppe = 1) die Schlafqualität um eine Einheit zunimmt, sinkt die Depressivität um 1.64 Einheiten mehr als in der Referenzgruppe (Gruppe = 0), also insgesamt um -2.27 - 1.64 = -3.91 Einheiten.
+]
+
+]
+
+---
+class: top, left
+### Multiple Regression mit Interaktion - diskret x diskret 
+
+#### Berichten der Ergebnisse nach APA
+```{r include=FALSE}
+set.seed(14)
+n <- 150  
+
+df <- data.frame(
+  Lernstrategie = factor(sample(c("A", "B"), n, replace = TRUE)),
+  Motivation = factor(sample(c("Niedrig", "Hoch"), n, replace = TRUE))
+)
+
+df$Testergebnis <- with(df, 
+                        ifelse(Lernstrategie == "A" & Motivation == "Niedrig", rnorm(n, mean = 60, sd = 6),
+                               ifelse(Lernstrategie == "A" & Motivation == "Hoch", rnorm(n, mean = 65, sd = 8),
+                                      ifelse(Lernstrategie == "B" & Motivation == "Niedrig", rnorm(n, mean = 70, sd = 6),
+                                             rnorm(n, mean = 80, sd = 5)))))
+
+df$Motivation <- relevel(df$Motivation, ref = "Niedrig")
+
+model <- lm(Testergebnis ~ Lernstrategie * Motivation, data = df)
+summary(model)
+
+```
+<small>
+<small>
+.code60[
+.pull-left[
+Kriterium: **Testergebnis** </br>
+Prädiktor 1: **Lernstrategie** (diskret: Lernstrategie A / Lernstrategie B) </br>
+Prädiktor 2: **Motivation** (diskret: niedrig / hoch) </small>
+```{r echo=FALSE}
+with(options(scipen = 0), {
+  summary(model)
+})
+```
+]
+]
+
+.pull-right[
+**Statistischer Bericht:**
+
+.content-box-gray[
+Eine multiple lineare Regression mit Interkation wurde durchgeführt, um die Effekte von Lernstratien (A vs. B) und Motivation (niedrig vs. hoch) auf das Testergebnis zu untersuchen. 
+Sowohl der Prädiktor Lernstrategie, $b$ = 9.41, $t$(146) = 6.24, $p$ < .001., als auch der Prädiktor Motivation, $b$ = 5.53, $t$(146) = 3.59, $p$ < .001, konnten das Testergebnis signifikant vorhersagen. 
+Es zeigt sich ein signifikanter Moderationseffekt, $b$ = 5.85, $t$(146) = 2.77, $p$ = .006. 
+Das Gesamtmodell erklärte einen signifikanten Anteil der Varianz im Testergebnis, $F$(3, 146) = 796.8, $p$ < .001, $R^2$ = .92. 
+]
+]
+
+---
+class: top, left
+### Multiple Regression mit Interaktion - diskret x diskret 
+
+
+.code60[
+.pull-left[
+
+#### Inhaltliche Interpretation der Modellparameter
+
+<small>
+<small>
+
+Kriterium: **Testergebnis** </br>
+Prädiktor 1: **Lernstrategie** (diskret: Lernstrategie A / Lernstrategie B) </br>
+Prädiktor 2: **Motivation** (diskret: niedrig / hoch) </small>
+```{r echo=FALSE}
+with(options(scipen = 0), {
+  summary(model)
+})
+```
+]
+]
+
+.pull-right[
+**Inhaltliche Interpretation (nur zum Verständnis - wird i.d.R. nicht berichtet!)**
+
+.content-box-gray[
+**Intercept:** Das durchschnittliche Testergebnis von Proband:innen mit Lernstrategie A und niedriger Motivation lag bei 59.72<br><br>
+**Gruppenmittelwerte:** Das durchschnittliche Testergebnis von Proband:innen mit Lernstrategie B und niedriger Motivation war um 9.42 Einheiten höher als in der Referenzgruppe (Lernstrategie A & niedrige Motivation) und lag bei 59.72 + 9.42 = 69.14 <br><br>
+Das durchschnittliche Testergebnis von Proband:innen mit Lernstrategie A und hoher Motivation war um 5.53 Einheiten höher als in der Referenzgruppe (Lernstrategie A & niedrige Motivation) und lag bei 59.72 + 5.53 = 65.25 <br><br>
+Für Proband:innen mit Lernstrategie B und hoher Motivation ergab sich ein geschätzter Mittelwert von 80.52 (59.72 + 9.42 + 5.53 + 5.85)
+]
+
+]
+
+---
+class: top, left
+### Anova mit Messwiederholung
+
+#### Berichten der Ergebnisse nach APA
+```{r include=FALSE}
+library(afex)
+
+set.seed(123)
+n = 20
+t0 = round(rnorm(n, 30, 5))
+t1 = round(rnorm(n, 25, 5))
+t2 = round(rnorm(n, 8, 5))
+id = 1:n
+df = data.frame(id = id, t0 = t0, t1 = t1, t2 = t2)
+
+df_long = as.data.frame(pivot_longer(data = df, 
+                               cols = c("t0", "t1", "t2"), 
+                               names_to = "Messzeitpunkt", 
+                               values_to = "PAS_Score"))
+
+
+model = aov_ez(dv = "PAS_Score", within = c("Messzeitpunkt"), id = "id", data = df_long)
+
+
+
+```
+<small>
+<small>
+.code60[
+.pull-left[
+**Paniksymptome** gemessen durch PAS (Panik- und Agoraphobie-Skala) <br>
+Im Rahmen einer Expositionstherapie mit drei Messzeitpunkten <br> </small>
+```{r echo=FALSE}
+with(options(scipen = 0), {
+  summary(model)
+})
+
+effectsize::eta_squared(model = model, partial = T)
+```
+]
+]
+
+.pull-right[
+**Statistischer Bericht:**
+
+.content-box-gray[
+Im Rahmen einer Expositionstherapie wurde die Entwicklung von Paniksymptomen über drei Messzeitpunkte hinweg mittels einer Varianzanalyse mit Messwiederholung untersucht. 
+Der Faktor Zeit zeigte einen signifikanten Einfluss auf die Symtomschwere $F$(2, 38) = 116.08, $p$ < .001, $\eta^2_p$ = 0.86. Damit konnten 86 % der Varianz durch den Messwiederholungsfaktor aufgeklärt werden - dies entspricht einem starken Effekt. Der Mauchly-Test war nicht signifikant ($p$ = .670), was auf eine erfüllte Sphärizitätsannahme hinweist.
+]
+
+]
+
+---
+class: top, left
+### Anova mit Messwiederholung
+
+#### Berichten der Ergebnisse nach APA
+<small>
+<small>
+.code60[
+.pull-left[
+**Paniksymptome** gemessen durch PAS (Panik- und Agoraphobie-Skala) <br>
+Im Rahmen einer Expositionstherapie mit drei Messzeitpunkten <br> </small>
+```{r echo=FALSE}
+with(options(scipen = 0), {
+  summary(model)
+})
+
+effectsize::eta_squared(model = model, partial = T)
+```
+]
+]
+
+.pull-right[
+**Inhaltlich bedeutet dies: (nur zum Verständnis - wird i.d.R. nicht berichtet!)**
+
+.content-box-gray[
+Es traten signifikante Unterschiede in der Ausprägung der Paniksymptome zwischen mindestens zwei Messzeitpunkten auf.
+]
+
+]
+
+---
+class: top, left
+### Anova mit Messwiederholung
+.code60[
+.pull-left[
+#### Post-hoc Vergleich 
+
+<small>
+<small>
+
+**Paniksymptome** gemessen durch PAS (Panik- und Agoraphobie-Skala) <br>
+Im Rahmen einer Expositionstherapie mit drei Messzeitpunkten <br> </small>
+
+```{r echo=FALSE}
+with(options(scipen = 0), {
+  emmeans::emmeans(model, pairwise ~ Messzeitpunkt, adjust = "tukey")
+})
+```
+]
+]
+
+.pull-right[
+**Ergebnisse des Post-hoc Tests**
+
+.content-box-gray[
+Ein Post-hoc Test mit Tukey-Korrektur zeigte signifikante Mittelwertsunterschiede zwischen allen drei Messzeitpunkten. Der Unterschied zwischen t0 und t1 betrug 6.10 Punkte, $t$(19) = 4.07, $p$ = .002; zwischen t1 und t2 lag der Unterschied bei 16.1 Punkten, $t$(19) = 11.80, $p$ < .001. Dies deutet darauf hin, dass die Symptomverbesserung vor allem in der späteren Phase der Therapie stattfand
+]
+
+]
+
+
+---
+
+---
+class: top, left
+### Mixed Design
+
+#### Berichten der Ergebnisse nach APA
+```{r include=FALSE}
+set.seed(124)
+n = 45
+
+t0 = round(rnorm(n, 35, 5))
+t1 = round(rnorm(n, 30, 5))
+t2 = round(rnorm(n, 19, 5))
+id = 1:45
+df = data.frame(id, t0, t1, t2)
+
+Messzeitpunkt = rep(c("t0", "t1", "t2"), each = n)
+df_long1 = data.frame(id = rep(id,3), Messzeitpunkt, BDI_II = c(t0, t1, t2))
+df_long1$Gruppe = "PDD_Therapy"
+
+t0 = round(rnorm(n, 35, 5))
+t1 = round(rnorm(n, 32, 5))
+t2 = round(rnorm(n, 25, 5))
+id = 46:90
+df = data.frame(id, t0, t1, t2)
+
+Messzeitpunkt = rep(c("t0", "t1", "t2"), each = n)
+df_long2 = data.frame(id = rep(id,3), Messzeitpunkt, BDI_II = c(t0, t1, t2))
+df_long2$Gruppe = "TAU"
+
+df_long = rbind(df_long1, df_long2)
+
+
+
+model = aov_ez(dv = "BDI_II", within = c("Messzeitpunkt"), between = "Gruppe", id = "id", data = df_long)
+summary(model)
+
+
+```
+<small>
+<small>
+.code60[
+
+.pull-left[
+**Studiendesign**
+
+Im Rahmen einer randomisiert-kontrollierten Studie (RCT) soll die Wirksamkeit eines neu entwickelten Therapieverfahrens (**"PDD_Therapie"**) für Patient*innen mit chronischer Depression (PDD = Persistent Depressive Disorder) untersucht werden.
+
+* Insgesamt wurden N = 90 stationär behandelte Personen mit chronischer Depression in die Studie eingeschlossen.
+* Die Teilnehmenden wurden **randomisiert** einer von zwei Behandlungsgruppen zugewiesen:
+* Die Gruppe **PDD_Therapy** (n = 45) erhielt die neu entwickelte psychotherapeutische Intervention.
+* Die Gruppe **TAU** (Treatment as Usual, n = 45) erhielt eine etablierte kognitive Verhaltenstherapie (KVT).
+* **Forschungsfrage:** Führt PDD_Therapy im Vergleich zu TAU zu einer stärkeren Reduktion depressiver Symptome im Therapieverlauf?
+* Variablen:
+  * **Abhängige Variable**: Depressivität, erfasst mit dem Beck Depression Inventory-II (BDI-II; Wertebereich: 0–63).
+  * **Unabhängige Variablen**: 
+  * Gruppe (2 Stufen: PDD_Therapy, TAU)
+  * Messzeitpunkt (3 Zeitpunkte: vor Beginn, nach 3 Wochen und nach 6 Wochen Psychotherapie)
+
+]
+</small>
+</small>
+]
+
+.pull-right[
+```{r echo=F}
+df_long[df_long$id < 3 | df_long$id == 46 | df_long$id == 47,] %>%
+  kbl() %>%
+  kable_classic(full_width = T, position = "left", font_size = 15)
+```
+
+Tabellarische Darstellung je für $n=2$ Personen in jeder Gruppe (Platzgründe)
+]
+
+
+---
+class: top, left
+### Mixed Design
+
+#### Berichten der Ergebnisse nach APA
+<small>
+<small>
+.code60[
+.pull-left[
+**Depressivität** gemessen durch BDI-II (Beck Depression Inventory-II) <br>
+**Gruppe**: TAU (treatment as usual); PDD_Therapy
+**Messzeitpunkte**: 3 MZP <br> </small>
+```{r echo=FALSE}
+with(options(scipen = 0), {
+  summary(model)
+})
+
+#effectsize::eta_squared(model = model, partial = T)
+```
+]
+]
+
+.pull-right[**Statistischer Bericht:**
+
+.content-box-gray[
+Im Rahmen eines RCTs wurde die Wirksamkeit einer neu entwickelten Therapie für chronisch depressive Patient*innen (PDD_Therapy) untersucht.
+
+Es zeigte sich ein signifikanter **Haupteffekt der Gruppe**, $F$(1, 88) = 20.66, $p$ < .001. 
+Auch der **Faktor Messzeitpunkt** hatte unabhängig von der Gruppenzugehörigkeit einen signifikanten Einfluss auf die Depressivität (BDI-II), Huynh-Feldt korrigiert: $F$(2, 176) = 160.86, $p$ < .001.
+Darüber hinaus wurde eine signifikante **Interaktion zwischen Gruppe und Messzeitpunkt** gefunden, Huynh-Feldt $F$(2, 176) = 15.86, $p$ < .001.
+
+Aufgrund signifikanter Ergebnisse in den Mauchly-Tests ($p$s < .05) wurde bei Effekten mit Messwiederholung die **Huynh-Feldt-Korrektur** angewendet.
+]
+]
+
+---
+class: top, left
+### Mixed Design
+
+#### Berichten der Ergebnisse nach APA
+<small>
+<small>
+.code60[
+.pull-left[
+**Depressivität** gemessen durch BDI-II (Beck Depression Inventory-II) <br>
+**Gruppe**: TAU (treatment as usual); PDD_Therapy
+**Messzeitpunkte**: 3 MZP <br> </small>
+```{r echo=FALSE}
+with(options(scipen = 0), {
+  summary(model)
+})
+
+#effectsize::eta_squared(model = model, partial = T)
+```
+]
+]
+
+.pull-right[
+**Inhaltlich bedeutet dies: (nur zum Verständnis - wird i.d.R. nicht berichtet!)**
+
+.content-box-gray[
+Es zeigten sich signifikante Mittelwertsunterschiede zwischen den beiden Therapiegruppen, über alle Messzeitpunkte hinweg betrachtet.
+Zudem traten signifikante Mittelwertsunterschiede zwischen den Messzeitpunkten auf, unabhängig von der Gruppenzugehörigkeit.
+Der **Symptomverlauf** unterschied sich zudem **zwischen den Gruppen**, d.h. die Entwicklung der Depressionswerte verlief in den beiden Interventionsbedingungen unterschiedlich über die Zeit hinweg.
+
+]
+
+]
+
+---
+class: top, left
+### Mixed Design
+.code60[
+.pull-left[
+#### Post-hoc Vergleich 
+
+<small>
+<small>
+**Depressivität** gemessen durch BDI-II (Beck Depression Inventory-II) <br>
+**Gruppe**: TAU (treatment as usual); PDD_Therapy
+**Messzeitpunkte**: 3 MZP <br> </small>
+
+```{r echo=FALSE}
+with(options(scipen = 0), {
+  emmeans::emmeans(model, pairwise ~ Gruppe:Messzeitpunkt, adjust = "tukey")
+})
+```
+]
+]
+
+.pull-right[
+**Ergebnisse des Post-hoc Tests**
+
+.content-box-gray[
+Ein **Post-hoc-Test mit Tukey-Korrektur** zeigte, dass in beiden Therapiegruppen eine signifikante Reduktion der Depressivität zwischen t0 und t2 auftrat.
+In der TAU-Gruppe betrug der mittlere Rückgang 8.53 Punkte, $t$(88) = 8.53, $p$ < .001. In der PDD_Therapie-Gruppe fiel der Rückgang mit 15.93 Punkten deutlich stärker aus, $t$(88) = 16.03, $p$ < .001. 
+
+Zwischen den Gruppen zeigten sich zu t0 und t1 keine signifikanten Unterschiede ($p$s > .05). Zum Zeitpunkt t2 unterschieden sich die Gruppen jedoch signifikant, $t$(88) = -7.02, $p$ < .001, zugunsten der **PDD_Therapie-Gruppe**, was auf deren höhere Wirksamkeit im Vergleich zur etablierten KVT hinweist.
+]
+
+]
+
+---

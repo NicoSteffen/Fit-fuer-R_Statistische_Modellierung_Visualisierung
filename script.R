@@ -51,9 +51,9 @@ pairwise.wilcox.test(df$change_bdi,
 # Einfaktorielle
 library(ggplot2)
 
-ggplot(data = df, aes(x = Klinik, y = change_bdi)) +
-  stat_summary(fun.data = mean_se,  geom = "errorbar") +
-  stat_summary(geom = "point", fun = mean) 
+ggplot(data = df, aes(x = Klinik, y = BDI_change)) +
+  stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2, color = "red") +
+  stat_summary(geom = "point", fun = mean, size = 3, color = "red")
 
 
 
@@ -80,7 +80,7 @@ ggplot(data = df, aes(x = Klinik, y = change_bdi, colour = Gruppe)) +
   stat_summary(fun.data = mean_se,  geom = "errorbar") +
   stat_summary(geom = "point", fun = mean) 
 
-
+geom_point()
 
 
 # lineare Regression 
